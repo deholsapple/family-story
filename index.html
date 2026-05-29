@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Holsapple Family Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf6f0;
+    --warm: #f5ede0;
+    --brown: #6b4c35;
+    --dark: #2c1810;
+    --gold: #c49a3c;
+    --gold-light: #e8c97a;
+    --text: #3d2b1f;
+    --muted: #8b6f5e;
+    --border: #ddd0c0;
+    --white: #ffffff;
+    --shadow: rgba(44, 24, 16, 0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(196,154,60,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(107,76,53,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 64px 0 48px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 32px auto 0;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 7vw, 56px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--brown);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.8;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    background: rgba(250,246,240,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    z-index: 100;
+    margin: 0 -24px;
+    padding: 12px 24px;
+  }
+
+  .progress-steps {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .step-dot.active { background: var(--gold); transform: scale(1.4); }
+  .step-dot.done { background: var(--brown); }
+
+  .progress-label {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .save-indicator {
+    text-align: center;
+    font-size: 11px;
+    color: var(--gold);
+    margin-top: 4px;
+    min-height: 16px;
+    transition: opacity 0.5s;
+  }
+
+  /* Sections */
+  .section {
+    display: none;
+    animation: fadeUp 0.4s ease both;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    margin: 48px 0 32px;
+    text-align: center;
+  }
+
+  .section-number {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .section-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 16px auto 0;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 16px var(--shadow);
+  }
+
+  /* Form fields */
+  .field-group {
+    margin-bottom: 22px;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 7px;
+  }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+    font-style: italic;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(196,154,60,0.12);
+    background: var(--white);
+  }
+
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 500px) { .row-2 { grid-template-columns: 1fr; } }
+
+  /* Repeatable entry blocks */
+  .entry-block {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .entry-block .remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+  .entry-block .remove-btn:hover { color: #c0392b; }
+
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    color: var(--gold);
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .add-btn:hover { background: rgba(196,154,60,0.08); }
+
+  /* Navigation */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    gap: 12px;
+  }
+  @media (max-width: 480px) {
+    .nav-buttons { flex-direction: column-reverse; gap: 10px; }
+    .btn-next, .btn-submit { width: 100%; }
+    .btn-back { width: 100%; }
+  }
+
+  .btn-back {
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 48px;
+  }
+  .btn-back:hover { border-color: var(--brown); color: var(--brown); }
+  .btn-back:active { border-color: var(--brown); color: var(--brown); }
+
+  .btn-next {
+    padding: 13px 32px;
+    background: var(--brown);
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(107,76,53,0.25);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 48px;
+    min-width: 120px;
+  }
+  .btn-next:hover { background: var(--dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(107,76,53,0.3); }
+  .btn-next:active { background: var(--dark); transform: scale(0.98); }
+
+  .btn-submit {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--gold), var(--brown));
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(196,154,60,0.3);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 52px;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,154,60,0.4); }
+  .btn-submit:active { transform: scale(0.98); }
+
+  /* Thank you screen */
+  .thankyou {
+    display: none;
+    text-align: center;
+    padding: 80px 24px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .thankyou.active { display: block; }
+
+  .thankyou-icon {
+    font-size: 56px;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .thankyou-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  .thankyou-msg {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 420px;
+    margin: 0 auto;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.8;
+  }
+
+  .required { color: var(--gold); }
+
+  /* Error state */
+  input.error, textarea.error, select.error {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>emailjs.init("IOJDgRrA_UMZ44aTt");</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero" id="hero">
+    <div class="hero-eyebrow">A Family Project</div>
+    <h1 class="hero-title">The Holsapple<br><em>Family Story</em></h1>
+    <p class="hero-sub">"The Holsapple family story is made up of many stories. We'd love to know yours — where you came from, where you've been, and the moments that shaped you. This is our way of making sure those stories aren't forgotten."</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-steps" id="progressDots"></div>
+    <div class="progress-label" id="progressLabel"></div>
+  </div>
+
+  <!-- FORM -->
+  <form id="mainForm">
+
+    <!-- SECTION 1: About You -->
+    <div class="section active" id="section-0">
+      <div class="section-header">
+        <div class="section-number">Step 1 of 7</div>
+        <h2 class="section-title">About You</h2>
+        <p class="section-desc">Let's start with the basics — who you are and where you fit in the family.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div class="row-2">
+          <div class="field-group">
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" name="first_name" placeholder="Your first name">
+          </div>
+          <div class="field-group">
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" name="last_name" placeholder="Your last name">
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field-group">
+            <label>Date of Birth</label>
+            <input type="text" name="dob" placeholder="e.g. March 15, 1965">
+          </div>
+          <div class="field-group">
+            <label>Birthplace</label>
+            <input type="text" name="birthplace" placeholder="City, State">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Your Connection to the Holsapple Family</label>
+          <div class="field-hint">e.g. "Dan's son", "Dan's sister", "Danny's wife"</div>
+          <input type="text" name="connection" placeholder="How are you connected?">
+        </div>
+        <div class="field-group">
+          <label>Email (so Dan can follow up if needed)</label>
+          <input type="email" name="email" placeholder="your@email.com">
+        </div>
+        <div class="field-group">
+          <label>Anything you'd like Dan to know before you start?</label>
+          <textarea name="intro_note" placeholder="Optional — no pressure..."></textarea>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <div></div>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Places Lived -->
+    <div class="section" id="section-1">
+      <div class="section-header">
+        <div class="section-number">Step 2 of 7</div>
+        <h2 class="section-title">Places You've Called Home</h2>
+        <p class="section-desc">Every place leaves a mark. Where has life taken you?</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div id="places-list">
+          <div class="entry-block">
+            <div class="row-2">
+              <div class="field-group">
+                <label>City / State</label>
+                <input type="text" name="place_city[]" placeholder="e.g. Dallas, TX">
+              </div>
+              <div class="field-group">
+                <label>Years</label>
+                <input type="text" name="place_years[]" placeholder="e.g. 1985 – 1992">
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Why you were there / What you remember</label>
+              <textarea name="place_notes[]" placeholder="Optional memory or reason..." style="min-height:60px"></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addEntry('places-list', placesTemplate())">+ Add Another Place</button>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Schools -->
+    <div class="section" id="section-2">
+      <div class="section-header">
+        <div class="section-number">Step 3 of 7</div>
+        <h2 class="section-title">Schools & Education</h2>
+        <p class="section-desc">From grade school to graduation — tell us about your education journey.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div id="schools-list">
+          <div class="entry-block">
+            <div class="field-group">
+              <label>School Name</label>
+              <input type="text" name="school_name[]" placeholder="e.g. Denton High School">
+            </div>
+            <div class="row-2">
+              <div class="field-group">
+                <label>Type</label>
+                <select name="school_type[]">
+                  <option value="">Select...</option>
+                  <option>Elementary School</option>
+                  <option>Middle School</option>
+                  <option>High School</option>
+                  <option>Community College</option>
+                  <option>University / College</option>
+                  <option>Trade / Vocational</option>
+                  <option>Military Training</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label>Years Attended</label>
+                <input type="text" name="school_years[]" placeholder="e.g. 1979 – 1983">
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Degree / Diploma / Notes</label>
+              <input type="text" name="school_notes[]" placeholder="What did you study or earn?">
+            </div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addEntry('schools-list', schoolTemplate())">+ Add Another School</button>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Career -->
+    <div class="section" id="section-3">
+      <div class="section-header">
+        <div class="section-number">Step 4 of 7</div>
+        <h2 class="section-title">Career & Work</h2>
+        <p class="section-desc">The work that defined you — jobs, careers, businesses, or callings.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div id="career-list">
+          <div class="entry-block">
+            <div class="field-group">
+              <label>Job Title / Role</label>
+              <input type="text" name="job_title[]" placeholder="e.g. Commercial Pilot">
+            </div>
+            <div class="row-2">
+              <div class="field-group">
+                <label>Employer / Company</label>
+                <input type="text" name="job_employer[]" placeholder="Company or organization">
+              </div>
+              <div class="field-group">
+                <label>Years</label>
+                <input type="text" name="job_years[]" placeholder="e.g. 2005 – present">
+              </div>
+            </div>
+            <div class="field-group">
+              <label>What this work meant to you</label>
+              <textarea name="job_notes[]" placeholder="Optional — what made it memorable?" style="min-height:60px"></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addEntry('career-list', careerTemplate())">+ Add Another Role</button>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Military -->
+    <div class="section" id="section-4">
+      <div class="section-header">
+        <div class="section-number">Step 5 of 7</div>
+        <h2 class="section-title">Military Service</h2>
+        <p class="section-desc">If you served, we want to honor that. Skip this section if it doesn't apply.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div class="field-group">
+          <label>Did you serve in the military?</label>
+          <select name="military_served" id="military_served" onchange="toggleMilitary()">
+            <option value="">Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No — skip to next section</option>
+          </select>
+        </div>
+        <div id="military-fields" style="display:none">
+          <div class="row-2">
+            <div class="field-group">
+              <label>Branch</label>
+              <select name="military_branch">
+                <option value="">Select...</option>
+                <option>Air Force</option>
+                <option>Army</option>
+                <option>Navy</option>
+                <option>Marines</option>
+                <option>Coast Guard</option>
+                <option>Space Force</option>
+                <option>National Guard</option>
+                <option>Reserves</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Years of Service</label>
+              <input type="text" name="military_years" placeholder="e.g. 1988 – 1996">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field-group">
+              <label>Highest Rank</label>
+              <input type="text" name="military_rank" placeholder="e.g. Staff Sergeant">
+            </div>
+            <div class="field-group">
+              <label>MOS / Specialty</label>
+              <input type="text" name="military_mos" placeholder="e.g. Pilot, 11B Infantry">
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Notable Stations, Deployments, or Memories</label>
+            <textarea name="military_notes" placeholder="Where did you serve? What do you want the family to know?"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Family & Marriage -->
+    <div class="section" id="section-5">
+      <div class="section-header">
+        <div class="section-number">Step 6 of 7</div>
+        <h2 class="section-title">Marriage & Family</h2>
+        <p class="section-desc">The people who became your family — spouses, children, grandchildren.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div id="marriages-list">
+          <div class="entry-block">
+            <div class="row-2">
+              <div class="field-group">
+                <label>Spouse / Partner Name</label>
+                <input type="text" name="spouse_name[]" placeholder="Full name">
+              </div>
+              <div class="field-group">
+                <label>Year Married</label>
+                <input type="text" name="spouse_year[]" placeholder="e.g. 1994">
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Notes (still together, divorced, widowed, etc.)</label>
+              <input type="text" name="spouse_notes[]" placeholder="Optional context">
+            </div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addEntry('marriages-list', marriageTemplate())">+ Add Another</button>
+
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+          <label style="margin-bottom:12px;display:block">Children</label>
+          <div id="children-list">
+            <div class="entry-block">
+              <div class="row-2">
+                <div class="field-group">
+                  <label>Child's Name</label>
+                  <input type="text" name="child_name[]" placeholder="First name">
+                </div>
+                <div class="field-group">
+                  <label>Birth Year</label>
+                  <input type="text" name="child_year[]" placeholder="e.g. 1995">
+                </div>
+              </div>
+              <div class="field-group">
+                <label>Notes</label>
+                <input type="text" name="child_notes[]" placeholder="e.g. lives in Austin TX, nurse">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="add-btn" onclick="addEntry('children-list', childTemplate())">+ Add Another Child</button>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-next" onclick="nextSection()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 7: Key Milestones -->
+    <div class="section" id="section-6">
+      <div class="section-header">
+        <div class="section-number">Step 7 of 7</div>
+        <h2 class="section-title">Key Life Milestones</h2>
+        <p class="section-desc">The moments that mattered. Achievements, turning points, things you're proud of — or just want remembered.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="card">
+        <div id="milestones-list">
+          <div class="entry-block">
+            <div class="row-2">
+              <div class="field-group">
+                <label>Year</label>
+                <input type="text" name="milestone_year[]" placeholder="e.g. 2003">
+              </div>
+              <div class="field-group">
+                <label>Category</label>
+                <select name="milestone_cat[]">
+                  <option value="">Select...</option>
+                  <option>Achievement</option>
+                  <option>Family</option>
+                  <option>Career</option>
+                  <option>Education</option>
+                  <option>Travel</option>
+                  <option>Health</option>
+                  <option>Faith</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Milestone</label>
+              <textarea name="milestone_desc[]" placeholder="What happened? Why does it matter?" style="min-height:70px"></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addEntry('milestones-list', milestoneTemplate())">+ Add Another Milestone</button>
+
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+          <div class="field-group">
+            <label>Anything else you'd like Dan to know?</label>
+            <div class="field-hint">A story, a memory, something you hope gets passed down.</div>
+            <textarea name="anything_else" placeholder="This is your space — no rules here..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button type="button" class="btn-back" onclick="prevSection()">← Back</button>
+        <button type="button" class="btn-submit" onclick="submitStory()">Send My Story →</button>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Thank You -->
+  <div class="thankyou" id="thankyou">
+    <span class="thankyou-icon">🌳</span>
+    <h2 class="thankyou-title">Thank You</h2>
+    <p class="thankyou-msg">Your story has been sent to Dan. It means more than you know that you took the time to share it. The Holsapple family story is richer for having yours in it.</p>
+  </div>
+
+</div>
+
+<script>
+  let currentSection = 0;
+  const totalSections = 7;
+  const sectionNames = ['About You','Places Lived','Schools','Career','Military','Family','Milestones'];
+
+  function initProgress() {
+    const dots = document.getElementById('progressDots');
+    dots.innerHTML = '';
+    for (let i = 0; i < totalSections; i++) {
+      const d = document.createElement('div');
+      d.className = 'step-dot' + (i === currentSection ? ' active' : i < currentSection ? ' done' : '');
+      d.onclick = () => { if (i < currentSection) goToSection(i); };
+      dots.appendChild(d);
+    }
+    document.getElementById('progressLabel').textContent = sectionNames[currentSection];
+  }
+
+  function goToSection(n) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`section-${n}`).classList.add('active');
+    currentSection = n;
+    initProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextSection() {
+    saveProgress();
+    if (currentSection < totalSections - 1) {
+      document.getElementById('progressWrap').style.display = 'block';
+      document.getElementById('hero').style.display = 'none';
+      goToSection(currentSection + 1);
+    }
+  }
+
+  function prevSection() {
+    saveProgress();
+    if (currentSection > 0) goToSection(currentSection - 1);
+    if (currentSection === 0) {
+      document.getElementById('hero').style.display = 'block';
+      document.getElementById('progressWrap').style.display = 'none';
+    }
+  }
+
+  function toggleMilitary() {
+    const val = document.getElementById('military_served').value;
+    document.getElementById('military-fields').style.display = val === 'yes' ? 'block' : 'none';
+  }
+
+  function addEntry(listId, html) {
+    const list = document.getElementById(listId);
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    list.appendChild(div.firstElementChild);
+  }
+
+  function removeEntry(btn) { btn.closest('.entry-block').remove(); }
+
+  function placesTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="row-2">
+        <div class="field-group"><label>City / State</label><input type="text" name="place_city[]" placeholder="e.g. Dallas, TX"></div>
+        <div class="field-group"><label>Years</label><input type="text" name="place_years[]" placeholder="e.g. 1985 – 1992"></div>
+      </div>
+      <div class="field-group"><label>Why you were there / What you remember</label><textarea name="place_notes[]" placeholder="Optional..." style="min-height:60px"></textarea></div>
+    </div>`;
+  }
+
+  function schoolTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="field-group"><label>School Name</label><input type="text" name="school_name[]" placeholder="School name"></div>
+      <div class="row-2">
+        <div class="field-group"><label>Type</label><select name="school_type[]"><option value="">Select...</option><option>Elementary School</option><option>Middle School</option><option>High School</option><option>Community College</option><option>University / College</option><option>Trade / Vocational</option><option>Military Training</option><option>Other</option></select></div>
+        <div class="field-group"><label>Years Attended</label><input type="text" name="school_years[]" placeholder="e.g. 1979 – 1983"></div>
+      </div>
+      <div class="field-group"><label>Degree / Diploma / Notes</label><input type="text" name="school_notes[]" placeholder="What did you study or earn?"></div>
+    </div>`;
+  }
+
+  function careerTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="field-group"><label>Job Title / Role</label><input type="text" name="job_title[]" placeholder="e.g. Commercial Pilot"></div>
+      <div class="row-2">
+        <div class="field-group"><label>Employer / Company</label><input type="text" name="job_employer[]" placeholder="Company"></div>
+        <div class="field-group"><label>Years</label><input type="text" name="job_years[]" placeholder="e.g. 2005 – present"></div>
+      </div>
+      <div class="field-group"><label>What this work meant to you</label><textarea name="job_notes[]" placeholder="Optional..." style="min-height:60px"></textarea></div>
+    </div>`;
+  }
+
+  function marriageTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="row-2">
+        <div class="field-group"><label>Spouse / Partner Name</label><input type="text" name="spouse_name[]" placeholder="Full name"></div>
+        <div class="field-group"><label>Year Married</label><input type="text" name="spouse_year[]" placeholder="e.g. 1994"></div>
+      </div>
+      <div class="field-group"><label>Notes</label><input type="text" name="spouse_notes[]" placeholder="Optional context"></div>
+    </div>`;
+  }
+
+  function childTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="row-2">
+        <div class="field-group"><label>Child's Name</label><input type="text" name="child_name[]" placeholder="First name"></div>
+        <div class="field-group"><label>Birth Year</label><input type="text" name="child_year[]" placeholder="e.g. 1995"></div>
+      </div>
+      <div class="field-group"><label>Notes</label><input type="text" name="child_notes[]" placeholder="e.g. lives in Austin TX, nurse"></div>
+    </div>`;
+  }
+
+  function milestoneTemplate() {
+    return `<div class="entry-block">
+      <button type="button" class="remove-btn" onclick="removeEntry(this)">×</button>
+      <div class="row-2">
+        <div class="field-group"><label>Year</label><input type="text" name="milestone_year[]" placeholder="e.g. 2003"></div>
+        <div class="field-group"><label>Category</label><select name="milestone_cat[]"><option value="">Select...</option><option>Achievement</option><option>Family</option><option>Career</option><option>Education</option><option>Travel</option><option>Health</option><option>Faith</option><option>Other</option></select></div>
+      </div>
+      <div class="field-group"><label>Milestone</label><textarea name="milestone_desc[]" placeholder="What happened? Why does it matter?" style="min-height:70px"></textarea></div>
+    </div>`;
+  }
+
+  // Handle form submission via EmailJS
+  async function submitStory() {
+    console.log("Submit triggered");
+    var form = document.getElementById("mainForm");
+    var btn = form.querySelector('.btn-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    var data = new FormData(form);
+    var lines = [];
+    var labels = {
+      first_name:'First Name', last_name:'Last Name', dob:'Date of Birth',
+      birthplace:'Birthplace', connection:'Family Connection', email:'Email',
+      intro_note:'Opening Note', military_served:'Military Service',
+      military_branch:'Branch', military_years:'Service Years',
+      military_rank:'Rank', military_mos:'Specialty', military_notes:'Military Notes',
+      anything_else:'Final Thoughts'
+    };
+    var arrayLabels = {
+      'place_city[]':'City', 'place_years[]':'Years', 'place_notes[]':'Memory',
+      'school_name[]':'School', 'school_type[]':'Type', 'school_years[]':'Years', 'school_notes[]':'Notes',
+      'job_title[]':'Title', 'job_employer[]':'Employer', 'job_years[]':'Years', 'job_notes[]':'Notes',
+      'spouse_name[]':'Name', 'spouse_year[]':'Year Married', 'spouse_notes[]':'Notes',
+      'child_name[]':'Name', 'child_year[]':'Birth Year', 'child_notes[]':'Notes',
+      'milestone_year[]':'Year', 'milestone_cat[]':'Category', 'milestone_desc[]':'Milestone'
+    };
+
+    // Simple fields
+    var simpleFields = ['first_name','last_name','dob','birthplace','connection','email','intro_note',
+      'military_served','military_branch','military_years','military_rank','military_mos','military_notes','anything_else'];
+    simpleFields.forEach(function(k) {
+      var v = data.get(k);
+      if (v && v.trim()) lines.push((labels[k] || k) + ': ' + v.trim());
+    });
+
+    // Array field groups
+    var groups = [
+      { title:'PLACES LIVED', keys:['place_city[]','place_years[]','place_notes[]'] },
+      { title:'SCHOOLS', keys:['school_name[]','school_type[]','school_years[]','school_notes[]'] },
+      { title:'CAREER', keys:['job_title[]','job_employer[]','job_years[]','job_notes[]'] },
+      { title:'MARRIAGE', keys:['spouse_name[]','spouse_year[]','spouse_notes[]'] },
+      { title:'CHILDREN', keys:['child_name[]','child_year[]','child_notes[]'] },
+      { title:'MILESTONES', keys:['milestone_year[]','milestone_cat[]','milestone_desc[]'] }
+    ];
+
+    var arrays = {};
+    var allEntries = Array.from(data.entries());
+    allEntries.forEach(function(pair) {
+      var key = pair[0]; var val = pair[1];
+      if (key.endsWith('[]')) {
+        if (!arrays[key]) arrays[key] = [];
+        arrays[key].push(val);
+      }
+    });
+
+    groups.forEach(function(g) {
+      // Build entries first — only add section if there's real content
+      var sectionLines = [];
+      var maxLen = 0;
+      g.keys.forEach(function(k) { if ((arrays[k]||[]).length > maxLen) maxLen = (arrays[k]||[]).length; });
+      for (var i = 0; i < maxLen; i++) {
+        var entryLines = [];
+        g.keys.forEach(function(k) {
+          var v = (arrays[k]||[])[i];
+          if (v && v.trim()) entryLines.push('  ' + (arrayLabels[k]||k) + ': ' + v.trim());
+        });
+        if (entryLines.length > 0) {
+          if (sectionLines.length > 0) sectionLines.push('');
+          entryLines.forEach(function(l) { sectionLines.push(l); });
+        }
+      }
+      // Only add section header if there's actual content underneath
+      if (sectionLines.length > 0) {
+        lines.push('');
+        lines.push(g.title);
+        lines.push('----------------------------------------');
+        sectionLines.forEach(function(l) { lines.push(l); });
+      }
+    });
+
+    // Clean up — remove leading blank lines
+    while (lines.length > 0 && lines[0].trim() === '') lines.shift();
+
+    var msg = lines.join('\n');
+    var firstName = data.get('first_name') || 'Family Member';
+    var lastName = data.get('last_name') || '';
+    var fullName = (firstName + ' ' + lastName).trim();
+
+    try {
+      await emailjs.send('service_lqy1rwd', 'template_fr009zd', {
+        from_name: fullName,
+        reply_to: data.get('email') || '',
+        subject: 'Holsapple Family Story - ' + fullName,
+        message: msg
+      });
+      form.style.display = 'none';
+      document.getElementById('progressWrap').style.display = 'none';
+      document.getElementById('thankyou').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(err) {
+      btn.textContent = 'Send My Story';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or email Dan at deholsapple@gmail.com');
+      console.error('EmailJS error:', err);
+    }
+  }
+
+  // AUTO-SAVE to localStorage
+  const SAVE_KEY = 'holsapple_family_story_draft';
+
+  function saveProgress() {
+    try {
+      var form = document.getElementById('mainForm');
+      var data = new FormData(form);
+      var saved = { section: currentSection, fields: {}, arrays: {} };
+      for (var pair of data.entries()) {
+        var key = pair[0]; var val = pair[1];
+        if (key.endsWith('[]')) {
+          if (!saved.arrays[key]) saved.arrays[key] = [];
+          saved.arrays[key].push(val);
+        } else {
+          saved.fields[key] = val;
+        }
+      }
+      localStorage.setItem(SAVE_KEY, JSON.stringify(saved));
+      // Show save indicator
+      var ind = document.getElementById('saveIndicator');
+      if (ind) {
+        ind.textContent = '✓ Draft saved';
+        ind.style.opacity = '1';
+        setTimeout(function() { ind.style.opacity = '0'; }, 2000);
+      }
+    } catch(e) {
+      var ind = document.getElementById('saveIndicator');
+      if (ind) { ind.textContent = '⚠ Could not save draft'; ind.style.opacity = '1'; }
+    }
+  }
+
+  function restoreProgress() {
+    try {
+      var raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      if (!saved) return;
+
+      // Restore simple fields
+      var fields = saved.fields || {};
+      Object.keys(fields).forEach(function(key) {
+        var el = document.querySelector('[name="' + key + '"]');
+        if (el) {
+          el.value = fields[key];
+          if (key === 'military_served') toggleMilitary();
+        }
+      });
+
+      // Restore array fields (places, schools, etc.)
+      var arrays = saved.arrays || {};
+      var groups = [
+        { key: 'place_city[]', listId: 'places-list', template: placesTemplate },
+        { key: 'school_name[]', listId: 'schools-list', template: schoolTemplate },
+        { key: 'job_title[]', listId: 'career-list', template: careerTemplate },
+        { key: 'spouse_name[]', listId: 'marriages-list', template: marriageTemplate },
+        { key: 'child_name[]', listId: 'children-list', template: childTemplate },
+        { key: 'milestone_year[]', listId: 'milestones-list', template: milestoneTemplate },
+      ];
+
+      groups.forEach(function(g) {
+        var vals = arrays[g.key];
+        if (!vals || vals.length <= 1) return;
+        // Add extra blocks for additional entries beyond the first
+        for (var i = 1; i < vals.length; i++) {
+          addEntry(g.listId, g.template());
+        }
+      });
+
+      // Now fill all array inputs
+      Object.keys(arrays).forEach(function(key) {
+        var inputs = document.querySelectorAll('[name="' + key + '"]');
+        arrays[key].forEach(function(val, i) {
+          if (inputs[i]) inputs[i].value = val;
+        });
+      });
+
+      // Restore section
+      if (saved.section && saved.section > 0) {
+        document.getElementById('progressWrap').style.display = 'block';
+        document.getElementById('hero').style.display = 'none';
+        goToSection(saved.section);
+        showRestoreBanner();
+      }
+    } catch(e) {}
+  }
+
+  function showRestoreBanner() {
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#c49a3c;color:#2c1810;padding:10px 16px;text-align:center;font-family:Lato,sans-serif;font-size:13px;font-weight:700;z-index:999;display:flex;align-items:center;justify-content:center;gap:16px;';
+    banner.innerHTML = 'Your progress was saved automatically. <button onclick="clearDraft()" style="background:transparent;border:1px solid #2c1810;padding:3px 10px;cursor:pointer;font-family:inherit;font-size:12px;border-radius:4px;">Start Fresh</button>';
+    document.body.prepend(banner);
+    setTimeout(function() { if(banner.parentNode) banner.parentNode.removeChild(banner); }, 6000);
+  }
+
+  function clearDraft() {
+    try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+    location.reload();
+  }
+
+  // Auto-save every 10 seconds and on every input change
+  document.getElementById('mainForm').addEventListener('input', saveProgress);
+  document.getElementById('mainForm').addEventListener('change', saveProgress);
+  setInterval(saveProgress, 10000);
+
+  // Clear draft on successful submit
+  var origSubmit = window.submitStory;
+  window.submitStory = async function() {
+    await origSubmit();
+    try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+  };
+
+  initProgress();
+  restoreProgress();
+</script>
+</body>
+</html>
